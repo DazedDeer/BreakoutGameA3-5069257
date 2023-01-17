@@ -29,6 +29,7 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		Timer timer = new Timer(5, this);
 		timer.start();
 		
+		Ball ball = ball(Settings.INITIAL_BALL_X, Settings.INITIAL_BALL_Y);
 		// TODO: Create a new ball object and assign it to the appropriate variable
 		// TODO: Create a new paddle object and assign it to the appropriate variable
 		// TODO: Create a new bricks array (Use Settings.TOTAL_BRICKS)
