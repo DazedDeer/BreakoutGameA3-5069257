@@ -2,9 +2,10 @@ import java.awt.Graphics;
 
 public class Ball extends Sprite {
 
+	// Private ball attributes denoting the ball's velocity
 	private int xVelocity = 1, yVelocity = -1;
 	
-	// Constructor
+	// Ball constructor
 	public Ball() {
 		// TODO: Set width to Settings.BALL_WIDTH
 		// TODO: Set width to Settings.BALL_HEIGHT
@@ -44,20 +45,29 @@ public class Ball extends Sprite {
 		
 	}
 	
+	// Set the ball's x velocity
 	public void setXVelocity(int x) {
-		// TODO: Set the x velocity
+		this.xVelocity = x;
 	}
+	
+	// Set the ball's y velocity
 	public void setYVelocity(int y) {
-		// TODO: Set the y velocity
+		this.yVelocity = y;
 	}
 	
+	
+	// Return the ball's x velocity
 	public int getXVelocity() {
-		return 0;	// TODO: Return the x velocity
-	}
-	public int getYVelocity() {
-		return 0;	// TODO: Return the y velocity
+		return this.xVelocity;
 	}
 	
+	// Return the ball's y velocity
+	public int getYVelocity() {
+		return this.yVelocity;
+	}
+	
+	
+	// Paint the ball's graphics
 	public void paint(Graphics g) {
 		g.fillOval(x, y, Settings.BALL_WIDTH, Settings.BALL_HEIGHT);
 	}

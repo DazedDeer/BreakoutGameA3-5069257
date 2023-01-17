@@ -2,6 +2,7 @@ import java.awt.Rectangle;
 
 public class Sprite {
 	
+	// Sprite's protected attributes denoting it's size and location
 	protected int x,y,width,height;
 	
 	// Set the x value
