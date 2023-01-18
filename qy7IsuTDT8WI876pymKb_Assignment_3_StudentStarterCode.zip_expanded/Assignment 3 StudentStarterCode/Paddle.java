@@ -36,12 +36,12 @@ public class Paddle extends Sprite {
 		x += xVelocity;
 		
 		// Prevents the paddle from moving outside the screen on the left side
-		if (this.getX() == this.getWidth()/2) {
+		if (this.getX() == 0) {
 			this.setX(this.getX() + 1);
 		}
 		
 		// Prevents the paddle from moving outside the screen on the right side
-		else if (this.getX() == (Settings.WINDOW_WIDTH - this.getWidth()/2)) {
+		else if (this.getX() == Settings.WINDOW_WIDTH - this.getWidth()) {
 			this.setX(this.getX() - 1);
 		}
 	}
