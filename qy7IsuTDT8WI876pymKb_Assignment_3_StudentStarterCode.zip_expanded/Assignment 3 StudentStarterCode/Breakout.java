@@ -11,12 +11,14 @@ public class Breakout extends JFrame{
 	
 	// Sets up the screen for the game
 	public Breakout() {
+		
 		// Sets the window properties
 		setTitle(Settings.WINDOW_NAME);
 		setSize(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
 		setBackground(Color.WHITE);
 		setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
         // Creates the breakout panel
         panel = new BreakoutPanel(this);
         add(panel);
@@ -26,7 +28,10 @@ public class Breakout extends JFrame{
 	// Starts the game
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			
 	         public void run() {
+	        	 
+	        	 // Creates the breakout window
 	        	 new Breakout();	
 	         }
 		});

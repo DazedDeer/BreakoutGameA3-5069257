@@ -8,9 +8,11 @@ public class Brick extends Sprite {
 	
 	// Brick constructor
 	public Brick(int x, int y) {
+		
 		// Sets the brick's size 
 		this.width = Settings.BRICK_WIDTH;
 		this.height = Settings.BRICK_HEIGHT;
+		
 		// Sets the brick's x and y position
 		this.x = x;
 		this.y = y;
@@ -28,7 +30,9 @@ public class Brick extends Sprite {
 	
 	// Paints the Brick graphics
 	public void paint(Graphics g) {
+		
 		if(!broken) {
+			
 			g.fillRect(x, y, Settings.BRICK_WIDTH, Settings.BRICK_HEIGHT);
 		}
 	}

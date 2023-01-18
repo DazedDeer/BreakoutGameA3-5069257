@@ -9,9 +9,11 @@ public class Ball extends Sprite {
 	
 	// Ball constructor
 	public Ball() {
+		
 		// Set's the ball's size
 		this.setWidth(Settings.BALL_WIDTH);
 		this.setHeight(Settings.BALL_HEIGHT);
+		
 		// Resets the ball's position to the initial position
 		resetPosition();
 	}
@@ -21,6 +23,7 @@ public class Ball extends Sprite {
 	 * Uses Settings.INITIAL_BALL_X/Y to set the position of the ball
 	 */
 	public void resetPosition() {
+		
 		// Sets the ball back to the initial y and x positions
 		this.setX(Settings.INITIAL_BALL_X);
 		this.setY(Settings.INITIAL_BALL_Y);
@@ -28,29 +31,37 @@ public class Ball extends Sprite {
 	
 	// Updates the balls position, making sure it doesn't leave the screen
 	public void update() {
+		
 		// Updates the balls x and y positions by adding the relevant x or y velocities to them
 		x += xVelocity;
 		y += yVelocity;
+		
 		// Bounce off left side of screen
 		if(x <= 0) {
+			
 			// Moves the ball away from the edge
 			x = 0;
+			
 			// Reverses the ball's velocity to make it go right
 			xVelocity = -xVelocity;
 		}
 		
 		// Bounce off right side of screen
 		if(x >= Settings.WINDOW_WIDTH - Settings.BALL_WIDTH - 15) {
+			
 			// Moves the ball away from the edge
 			x --;
+			
 			// Reverses the ball's velocity to make it go left
 			xVelocity = -xVelocity;
 		}
 		
 		// Bounce off top of screen
 		if(y <= 0) {
+			
 			// Moves the ball away from the edge
 			y = 0;
+			
 			// Reverses the ball's velocity to make it go downwards
 			yVelocity = -yVelocity;
 		}
