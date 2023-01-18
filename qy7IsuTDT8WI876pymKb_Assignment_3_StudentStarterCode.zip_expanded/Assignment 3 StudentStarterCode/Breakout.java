@@ -6,19 +6,29 @@ public class Breakout extends JFrame{
 	
 	static final long serialVersionUID = 1L;
 	
+	
+	// Declares the breakout panel variable
 	private BreakoutPanel panel;
 	
+	
+	// Sets up the screen for the game
 	public Breakout() {
-		// TODO: Set the size of the screen (use Settings.WINDOW_WIDTH/HEIGHT)
-		// TODO: Set the title
-		// TODO: Set the background colour to white
-		// TODO: Set resizable to false
+		
+		// Sets the window properties
+		setTitle(Settings.WINDOW_NAME);
+		setSize(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
+		setBackground(Color.WHITE);
+		setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        // Creates the breakout panel
         panel = new BreakoutPanel(this);
         add(panel);
-		// TODO: Set visible to true
+        setVisible(true);
 	}
 
+	
+	// Starts the game
 	public static void main(String[] args) {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	         public void run() {
