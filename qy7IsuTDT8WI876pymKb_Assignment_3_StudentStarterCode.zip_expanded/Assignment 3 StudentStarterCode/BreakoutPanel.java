@@ -14,6 +14,7 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 	
 	static final long serialVersionUID = 2L;
 
+	// Key Breakout panel variables and objects
 	private boolean gameRunning = true;
 	private int livesLeft = 3;
 	private String screenMessage = "";
@@ -26,66 +27,110 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		addKeyListener(this);
 		setFocusable(true);
 		
+		// Sets up the timer for the game
 		Timer timer = new Timer(5, this);
 		timer.start();
 		
-		Ball ball = ball(Settings.INITIAL_BALL_X, Settings.INITIAL_BALL_Y);
-		// TODO: Create a new ball object and assign it to the appropriate variable
-		// TODO: Create a new paddle object and assign it to the appropriate variable
-		// TODO: Create a new bricks array (Use Settings.TOTAL_BRICKS)
-		// TODO: Call the createBricks() method
+		// Creates a ball for the game
+		Ball ball = new Ball();
+		
+		// Creates a paddle for the game
+		Paddle paddle = new Paddle();
+		
+		// Creates a bricks array to contain the total number of bricks found in settings
+		Brick bricks[] = new Brick[Settings.TOTAL_BRICKS];
+		
+		// Calls the method to create the bricks
+		createBricks();
 	}
 	
+	
+	// Method that breaks the bricks
 	private void createBricks() {
+		
 		int counter = 0;
 		int x_space = 0;
 		int y_space = 0;
+		
 		for(int x = 0; x < 4; x++) {
 			for(int y = 0; y < 5; y++) {
+				
 				bricks[counter] = new Brick((x * Settings.BRICK_WIDTH) + Settings.BRICK_HORI_PADDING + x_space, (y * Settings.BRICK_HEIGHT) + Settings.BRICK_VERT_PADDING + y_space);
 				counter++;
 				y_space++;
 			}
+			
 			x_space++;
 			y_space = 0;
 		}
 	}
 	
+	
+	// Method to paint each brick in the bricks array
 	private void paintBricks(Graphics g) {
-		// TODO: Loop through the bricks and call the paint() method
+
+		// loops through the bricks array
+		for (int i = 0; i < bricks.length; i++) {
+			paint(g);
+		}
 	}
 	
+	
+	// Method that is used while the game is running to keep the game updated
 	private void update() {
+		
 		if(gameRunning) {
-			// TODO: Update the ball and paddle
+			
+			ball.update();
+			paddle.update();
 			collisions();
 			repaint();
 		}
 	}
 	
+	
+	// Method that is used to show that the game is over
 	private void gameOver() {
-		// TODO: Set screen message
+		
+		screenMessage = "GAME OVER!";
 		stopGame();
 	}
 	
+	
+	// Method that is used to show that the game has been won
 	private void gameWon() {
-		// TODO: Set screen message
+		
+		screenMessage = "YOU WIN!";
 		stopGame();
 	}
 	
+	
+	// Method that is used to stop the game
 	private void stopGame() {
 		gameRunning = false;
 	}
 	
+	
+	/* Method that checks if game has been lost 
+	 * (when are no lives left and the ball hits the bottom of the screen)
+	 */
 	private void collisions() {
+		
 		// Check for loss
 		if(ball.y > 450) {
-			// Game over
+			
+			// Deduct a life
 			livesLeft--;
+			
 			if(livesLeft <= 0) {
+				
+				// Game is over
 				gameOver();
 				return;
+				
 			} else {
+				
+				// resets the ball
 				ball.resetPosition();
 				ball.setYVelocity(-1);
 			}
@@ -93,83 +138,119 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		
 		// Check for win
 		boolean bricksLeft = false;
+		
 		for(int i = 0; i < bricks.length; i++) {
+			
 			// Check if there are any bricks left
 			if(!bricks[i].isBroken()) {
+				
 				// Brick was found, close loop
 				bricksLeft = true;
 				break;
 			}
 		}
 		if(!bricksLeft) {
+			
+			// Game is won, no bricks left
 			gameWon();
 			return;
 		}
 		
 		// Check collisions
 		if(ball.getRectangle().intersects(paddle.getRectangle())) {
+			
 			// Simplified touching of paddle
 			// Proper game would change angle of ball depending on where it hit the paddle
 			ball.setYVelocity(-1);
 		}
 		
+		// Checks if the ball has collided with a brick by looping through the bricks array
 		for(int i = 0; i < bricks.length; i++) {
+			
 			if (ball.getRectangle().intersects(bricks[i].getRectangle())) {
+				
 				int ballLeft = (int) ball.getRectangle().getMinX();
 	            int ballHeight = (int) ball.getRectangle().getHeight();
 	            int ballWidth = (int) ball.getRectangle().getWidth();
 	            int ballTop = (int) ball.getRectangle().getMinY();
 
+	            // Creates new points
 	            Point pointRight = new Point(ballLeft + ballWidth + 1, ballTop);
 	            Point pointLeft = new Point(ballLeft - 1, ballTop);
 	            Point pointTop = new Point(ballLeft, ballTop - 1);
 	            Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
 
+	            // Changes ball's velocity based on points
 	            if (!bricks[i].isBroken()) {
+	            	
 	                if (bricks[i].getRectangle().contains(pointRight)) {
+	                	
 	                    ball.setXVelocity(-1);
 	                } else if (bricks[i].getRectangle().contains(pointLeft)) {
+	                	
 	                    ball.setXVelocity(1);
 	                }
 
 	                if (bricks[i].getRectangle().contains(pointTop)) {
 	                    ball.setYVelocity(1);
+	                    
 	                } else if (bricks[i].getRectangle().contains(pointBottom)) {
+	                	
 	                    ball.setYVelocity(-1);
 	                }
+	                
+	                // Sets the brick that was hit to broken
 	                bricks[i].setBroken(true);
 	            }
 			}
 		}
 	}
 	
+	
+	// Paints the components
 	@Override
     public void paintComponent(Graphics g) {
+		
         super.paintComponent(g);
 
         ball.paint(g);
         paddle.paint(g);
         paintBricks(g);
-        
-        // Draw lives left
-        // TODO: Draw lives left in the top left hand corner
+        g.drawString(String.valueOf(livesLeft), Settings.LIVES_POSITION_X, Settings.LIVES_POSITION_Y);
         
         // Draw screen message
         if(screenMessage != null) {
+        	
         	g.setFont(new Font("Arial", Font.BOLD, 18));
         	int messageWidth = g.getFontMetrics().stringWidth(screenMessage);
         	g.drawString(screenMessage, (Settings.WINDOW_WIDTH / 2) - (messageWidth / 2), Settings.MESSAGE_POSITION);
         }
     }
 
+	
+	// Moves the paddle depending on whether the right or left arrow key is pressed
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO: Set the velocity of the paddle depending on whether the player is pressing left or right
-	}
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			
+			paddle.setXVelocity(-1);
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			
+			paddle.setXVelocity(1);
+		}
+	} 
 
+	
+	// Stops the paddle from moving once the left and right arrow keys are no longer held down
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO: Set the velocity of the paddle after the player has released the keys
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			
+			paddle.setXVelocity(0);
+		}
 	}
 
 	@Override
