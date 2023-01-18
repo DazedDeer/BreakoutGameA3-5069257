@@ -24,7 +24,6 @@ public class Sprite {
 	public void setHeight(int height) { 
 		this.height = height;
 	}
-	
 
 	// Return the x value
 	public int getX() { 
