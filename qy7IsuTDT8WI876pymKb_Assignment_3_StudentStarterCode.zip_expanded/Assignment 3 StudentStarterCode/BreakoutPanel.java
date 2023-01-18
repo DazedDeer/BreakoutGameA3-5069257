@@ -32,20 +32,20 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 		timer.start();
 		
 		// Creates a ball for the game
-		Ball ball = new Ball();
+		ball = new Ball();
 		
 		// Creates a paddle for the game
-		Paddle paddle = new Paddle();
+		paddle = new Paddle();
 		
 		// Creates a bricks array to contain the total number of bricks found in settings
-		Brick bricks[] = new Brick[Settings.TOTAL_BRICKS];
+		bricks = new Brick[Settings.TOTAL_BRICKS];
 		
 		// Calls the method to create the bricks
 		createBricks();
 	}
 	
 	
-	// Method that breaks the bricks
+	// Method that creates the bricks
 	private void createBricks() {
 		
 		int counter = 0;
@@ -71,7 +71,7 @@ public class BreakoutPanel extends JPanel implements ActionListener, KeyListener
 
 		// loops through the bricks array
 		for (int i = 0; i < bricks.length; i++) {
-			paint(g);
+			bricks[i].paint(g);
 		}
 	}
 	
